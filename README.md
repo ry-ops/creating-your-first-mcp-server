@@ -1,5 +1,9 @@
 # Creating Your First MCP Server
 
+<p align="center">
+  <img src="hero.svg" alt="Creating Your First MCP Server" width="100%">
+</p>
+
 A production-ready TypeScript implementation of a Model Context Protocol (MCP) server with example tools demonstrating best practices for building MCP servers.
 
 ## Quick Start

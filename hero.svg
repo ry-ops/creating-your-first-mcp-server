@@ -1,0 +1,237 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+
+    <linearGradient id="protocol-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+
+    <linearGradient id="tool-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    @keyframes pulse-server {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.08); opacity: 1; }
+    }
+
+    @keyframes flow-bidirectional {
+      0% { stroke-dashoffset: 40; opacity: 0.4; }
+      50% { opacity: 0.8; }
+      100% { stroke-dashoffset: 0; opacity: 0.4; }
+    }
+
+    @keyframes float-tool {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(5deg); }
+    }
+
+    @keyframes message-travel {
+      0% { transform: translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateX(400px); opacity: 0; }
+    }
+
+    @keyframes tool-activate {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+
+    .server-core {
+      animation: pulse-server 5s ease-in-out infinite;
+    }
+
+    .connection-line {
+      stroke-dasharray: 10 5;
+      animation: flow-bidirectional 3s linear infinite;
+    }
+
+    .tool-node {
+      animation: float-tool 6s ease-in-out infinite;
+    }
+
+    .message-packet {
+      animation: message-travel 4s ease-in-out infinite;
+    }
+  </style>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-gradient)"/>
+
+  <!-- Circuit-style background pattern -->
+  <g opacity="0.08">
+    <line x1="0" y1="200" x2="1200" y2="200" stroke="#6366f1" stroke-width="1"/>
+    <line x1="0" y1="315" x2="1200" y2="315" stroke="#8b5cf6" stroke-width="1.5"/>
+    <line x1="0" y1="430" x2="1200" y2="430" stroke="#6366f1" stroke-width="1"/>
+    <line x1="300" y1="0" x2="300" y2="630" stroke="#6366f1" stroke-width="1"/>
+    <line x1="600" y1="0" x2="600" y2="630" stroke="#8b5cf6" stroke-width="1.5"/>
+    <line x1="900" y1="0" x2="900" y2="630" stroke="#6366f1" stroke-width="1"/>
+
+    <!-- Circuit nodes -->
+    <circle cx="300" cy="200" r="4" fill="#6366f1"/>
+    <circle cx="600" cy="200" r="4" fill="#8b5cf6"/>
+    <circle cx="900" cy="200" r="4" fill="#6366f1"/>
+    <circle cx="300" cy="430" r="4" fill="#6366f1"/>
+    <circle cx="600" cy="430" r="4" fill="#8b5cf6"/>
+    <circle cx="900" cy="430" r="4" fill="#6366f1"/>
+  </g>
+
+  <!-- Central MCP Server -->
+  <g class="mcp-server">
+    <circle cx="600" cy="315" r="70" fill="url(#protocol-gradient)" opacity="0.2"/>
+    <circle cx="600" cy="315" r="50" fill="url(#protocol-gradient)" opacity="0.5" filter="url(#glow)"/>
+    <circle class="server-core" cx="600" cy="315" r="32" fill="#6366f1" filter="url(#glow)"/>
+
+    <!-- Server icon elements (abstract) -->
+    <rect x="585" y="300" width="30" height="4" rx="2" fill="#a855f7" opacity="0.8"/>
+    <rect x="585" y="310" width="30" height="4" rx="2" fill="#8b5cf6" opacity="0.8"/>
+    <rect x="585" y="320" width="30" height="4" rx="2" fill="#a855f7" opacity="0.8"/>
+    <rect x="585" y="330" width="30" height="4" rx="2" fill="#8b5cf6" opacity="0.8"/>
+
+    <!-- Pulsing rings -->
+    <circle cx="600" cy="315" r="40" fill="none" stroke="#6366f1" stroke-width="2" opacity="0">
+      <animate attributeName="r" values="40;80" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.6;0" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="600" cy="315" r="40" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0">
+      <animate attributeName="r" values="40;80" dur="3s" repeatCount="indefinite" begin="1.5s"/>
+      <animate attributeName="opacity" values="0.6;0" dur="3s" repeatCount="indefinite" begin="1.5s"/>
+    </circle>
+  </g>
+
+  <!-- Tool nodes (geometric shapes representing abstract tools) -->
+  <g class="tools">
+    <!-- Tool 1 - Top left (Triangle - Calculator concept) -->
+    <g class="tool-node" style="animation-delay: 0s">
+      <polygon points="250,150 280,180 220,180" fill="url(#tool-gradient)" opacity="0.6" filter="url(#glow)"/>
+      <polygon points="250,155 270,175 230,175" fill="#22d3ee" opacity="0.9">
+        <animate attributeName="opacity" values="0.9;1;0.9" dur="4s" repeatCount="indefinite"/>
+      </polygon>
+    </g>
+
+    <!-- Tool 2 - Top right (Diamond - File ops concept) -->
+    <g class="tool-node" style="animation-delay: -1s">
+      <polygon points="950,170 980,200 950,230 920,200" fill="url(#tool-gradient)" opacity="0.6" filter="url(#glow)"/>
+      <polygon points="950,178 970,198 950,218 930,198" fill="#06b6d4" opacity="0.9">
+        <animate attributeName="opacity" values="0.9;1;0.9" dur="4.5s" repeatCount="indefinite"/>
+      </polygon>
+    </g>
+
+    <!-- Tool 3 - Left (Hexagon - Weather concept) -->
+    <g class="tool-node" style="animation-delay: -2s">
+      <polygon points="200,315 220,304 240,315 240,337 220,348 200,337" fill="url(#tool-gradient)" opacity="0.6" filter="url(#glow)"/>
+      <polygon points="205,318 220,310 235,318 235,332 220,340 205,332" fill="#22d3ee" opacity="0.9">
+        <animate attributeName="opacity" values="0.9;1;0.9" dur="5s" repeatCount="indefinite"/>
+      </polygon>
+    </g>
+
+    <!-- Tool 4 - Right (Square - Generic tool) -->
+    <g class="tool-node" style="animation-delay: -3s">
+      <rect x="950" y="295" width="60" height="60" rx="6" fill="url(#tool-gradient)" opacity="0.6" filter="url(#glow)"/>
+      <rect x="960" y="305" width="40" height="40" rx="4" fill="#06b6d4" opacity="0.9">
+        <animate attributeName="opacity" values="0.9;1;0.9" dur="4.2s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+
+    <!-- Tool 5 - Bottom left (Pentagon) -->
+    <g class="tool-node" style="animation-delay: -4s">
+      <polygon points="280,480 310,465 330,490 310,515 280,500" fill="url(#tool-gradient)" opacity="0.6" filter="url(#glow)"/>
+      <polygon points="288,485 308,473 322,490 308,507 288,495" fill="#22d3ee" opacity="0.9">
+        <animate attributeName="opacity" values="0.9;1;0.9" dur="4.8s" repeatCount="indefinite"/>
+      </polygon>
+    </g>
+
+    <!-- Tool 6 - Bottom right (Octagon) -->
+    <g class="tool-node" style="animation-delay: -5s">
+      <polygon points="900,480 920,475 935,490 935,510 920,525 900,520 885,505 885,485" fill="url(#tool-gradient)" opacity="0.6" filter="url(#glow)"/>
+      <polygon points="905,485 918,481 928,490 928,505 918,514 905,510 895,501 895,489" fill="#06b6d4" opacity="0.9">
+        <animate attributeName="opacity" values="0.9;1;0.9" dur="5.3s" repeatCount="indefinite"/>
+      </polygon>
+    </g>
+  </g>
+
+  <!-- Bidirectional communication lines -->
+  <g class="communication">
+    <line class="connection-line" x1="250" y1="165" x2="600" y2="315" stroke="url(#protocol-gradient)" stroke-width="2.5" opacity="0.5"/>
+    <line class="connection-line" x1="950" y1="200" x2="600" y2="315" stroke="url(#protocol-gradient)" stroke-width="2.5" opacity="0.5" style="animation-delay: -0.5s"/>
+    <line class="connection-line" x1="220" y1="315" x2="600" y2="315" stroke="url(#protocol-gradient)" stroke-width="2.5" opacity="0.5" style="animation-delay: -1s"/>
+    <line class="connection-line" x1="980" y1="325" x2="600" y2="315" stroke="url(#protocol-gradient)" stroke-width="2.5" opacity="0.5" style="animation-delay: -1.5s"/>
+    <line class="connection-line" x1="305" y1="490" x2="600" y2="315" stroke="url(#protocol-gradient)" stroke-width="2.5" opacity="0.5" style="animation-delay: -2s"/>
+    <line class="connection-line" x1="910" y1="500" x2="600" y2="315" stroke="url(#protocol-gradient)" stroke-width="2.5" opacity="0.5" style="animation-delay: -2.5s"/>
+  </g>
+
+  <!-- Message packets traveling -->
+  <g class="messages">
+    <circle class="message-packet" cx="250" cy="165" r="5" fill="#22d3ee" opacity="0.9" filter="url(#glow)" style="animation-delay: 0s">
+      <animateMotion dur="4s" repeatCount="indefinite" path="M0,0 L350,150"/>
+    </circle>
+    <circle class="message-packet" cx="600" cy="315" r="5" fill="#8b5cf6" opacity="0.9" filter="url(#glow)" style="animation-delay: 2s">
+      <animateMotion dur="4s" repeatCount="indefinite" path="M0,0 L350,-115"/>
+    </circle>
+    <circle class="message-packet" cx="220" cy="315" r="4" fill="#06b6d4" opacity="0.8" filter="url(#glow)" style="animation-delay: 1s">
+      <animateMotion dur="4s" repeatCount="indefinite" path="M0,0 L380,0"/>
+    </circle>
+  </g>
+
+  <!-- Data flow arrows (bidirectional indicators) -->
+  <g opacity="0.3">
+    <!-- Top left arrow -->
+    <path d="M350,240 L380,250" stroke="#22d3ee" stroke-width="2" fill="none">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite"/>
+    </path>
+    <path d="M380,240 L350,250" stroke="#22d3ee" stroke-width="2" fill="none">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite" begin="1s"/>
+    </path>
+
+    <!-- Right arrow -->
+    <path d="M820,315 L850,315" stroke="#06b6d4" stroke-width="2" fill="none">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+    </path>
+    <path d="M850,325 L820,325" stroke="#06b6d4" stroke-width="2" fill="none">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite" begin="1.5s"/>
+    </path>
+  </g>
+
+  <!-- Protocol layer visualization -->
+  <g opacity="0.12">
+    <path d="M400,315 Q500,250 600,315 T800,315" stroke="#6366f1" stroke-width="3" fill="none" stroke-dasharray="8 8">
+      <animate attributeName="stroke-dashoffset" from="0" to="32" dur="4s" repeatCount="indefinite"/>
+    </path>
+    <path d="M400,315 Q500,380 600,315 T800,315" stroke="#8b5cf6" stroke-width="3" fill="none" stroke-dasharray="8 8">
+      <animate attributeName="stroke-dashoffset" from="32" to="0" dur="4s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- Ambient glows around tools and server -->
+  <circle cx="600" cy="315" r="150" fill="#6366f1" opacity="0.02">
+    <animate attributeName="opacity" values="0.02;0.08;0.02" dur="7s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="250" cy="165" r="80" fill="#22d3ee" opacity="0.02">
+    <animate attributeName="opacity" values="0.02;0.06;0.02" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="950" cy="200" r="80" fill="#06b6d4" opacity="0.02">
+    <animate attributeName="opacity" values="0.02;0.06;0.02" dur="6.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="220" cy="315" r="70" fill="#22d3ee" opacity="0.02">
+    <animate attributeName="opacity" values="0.02;0.05;0.02" dur="8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="980" cy="325" r="70" fill="#06b6d4" opacity="0.02">
+    <animate attributeName="opacity" values="0.02;0.05;0.02" dur="7.5s" repeatCount="indefinite"/>
+  </circle>
+</svg>

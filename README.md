@@ -163,5 +163,10 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Resources
 
 - [MCP Specification](https://modelcontextprotocol.io)
-- [MCP SDK Documentation](https://github.com/modelcontextprotocol/sdk)
+- [MCP SDK Documentation](https://github.com/modelcontextprotocol/typescript-sdk)
 - [TypeScript Documentation](https://www.typescriptlang.org)
+
+<!-- org-footer -->
+---
+
+<p align="center"><sub>Part of <a href="https://github.com/ry-ops">ry-ops</a> · building the pipes between infrastructure, automation, and observability · built by <a href="https://github.com/ry-ops">ry-ops</a></sub></p>

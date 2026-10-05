@@ -1,170 +1,75 @@
-# Creating Your First MCP Server
-
 <p align="center">
-  <img src="hero.svg" alt="Creating Your First MCP Server" width="100%">
+  <img src="hero.svg" width="100%" alt="Claude connects to your MCP server over the Model Context Protocol; the server advertises calculator, file-ops and weather tools; Claude calls the weather tool and gets the answer back.">
 </p>
 
-A production-ready TypeScript implementation of a Model Context Protocol (MCP) server with example tools demonstrating best practices for building MCP servers.
+<h1 align="center">Creating Your First MCP Server</h1>
 
-## Quick Start
+<p align="center"><b>Extend Claude with your own tools.</b> A clean, production-ready TypeScript MCP server with example tools — the template for exposing your own functions, data and prompts to any MCP client.</p>
 
-### Installation
+<p align="center">
+  <img src="https://img.shields.io/badge/MCP-server-d97757" alt="MCP server">
+  <img src="https://img.shields.io/badge/TypeScript-strict-3178c6" alt="TypeScript">
+  <img src="https://img.shields.io/badge/example%20tools-3-3ddc84" alt="3 example tools">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-8b96ad" alt="MIT"></a>
+</p>
 
-```bash
-npm install
-```
-
-### Build
-
-```bash
-npm run build
-```
-
-### Run the Server
-
-```bash
-npm start
-```
-
-### Run Example Client
-
-```bash
-npm run example
-```
+---
 
 ## What is MCP?
 
-The Model Context Protocol (MCP) is an open protocol that standardizes how applications provide context to Large Language Models (LLMs). It enables:
+The **Model Context Protocol** is an open standard for how apps give LLMs context. An **MCP server** exposes capabilities; an **MCP client** (like Claude) discovers and uses them. Write a server once, and any MCP client can plug into it.
 
-- **Standardized Communication**: A unified way for LLMs to interact with external tools and data sources
-- **Tool Integration**: Expose custom functionality that AI models can discover and use
-- **Resource Management**: Provide structured access to files, databases, and APIs
-- **Prompt Templates**: Define reusable prompts for common tasks
+## The building blocks
 
-### Key MCP Concepts
+<p align="center">
+  <img src="docs/concepts.svg" width="100%" alt="A client connects to a server, which exposes tools (functions Claude can call), resources (structured data by URI) and prompts (reusable templates).">
+</p>
 
-1. **Server**: Exposes tools, resources, and prompts that clients can use
-2. **Client**: Connects to MCP servers to access their capabilities
-3. **Tools**: Executable functions that perform specific tasks
-4. **Resources**: Data sources like files, database records, or API endpoints
-5. **Prompts**: Reusable prompt templates with parameters
+| | What |
+|---|---|
+| **Tools** | executable functions the model can call — this repo ships `calculator`, `file-ops` and `weather` |
+| **Resources** | structured data exposed by URI (files, records, APIs) |
+| **Prompts** | reusable, parameterized prompt templates |
 
-## Project Structure
-
-```
-creating-your-first-mcp-server/
-├── src/
-│   ├── index.ts              # Main MCP server implementation
-│   └── tools/
-│       ├── calculator.ts      # Mathematical operations tool
-│       ├── weather.ts         # Weather information tool
-│       └── file-ops.ts        # File operations tool
-├── examples/
-│   └── client.ts             # Example MCP client usage
-├── documentation/
-│   ├── MCP-CONCEPTS.md       # In-depth MCP concepts
-│   ├── TOOL-DEVELOPMENT.md   # Guide to creating tools
-│   └── INTEGRATION.md        # Integration guide
-├── package.json
-├── tsconfig.json
-└── LICENSE
-```
-
-## Available Tools
-
-### Calculator Tool
-Performs mathematical operations (add, subtract, multiply, divide, power, sqrt).
-
-```typescript
-// Example usage
-{
-  "operation": "add",
-  "a": 5,
-  "b": 3
-}
-// Returns: { "result": 8 }
-```
-
-### Weather Tool
-Retrieves weather information for a location (simulated data for demonstration).
-
-```typescript
-// Example usage
-{
-  "location": "San Francisco"
-}
-// Returns weather data including temperature, conditions, humidity
-```
-
-### File Operations Tool
-Performs file system operations (read, write, list, delete).
-
-```typescript
-// Example usage
-{
-  "operation": "read",
-  "path": "/path/to/file.txt"
-}
-// Returns file contents or operation result
-```
-
-## Development
-
-### Building
+## Quick start
 
 ```bash
+git clone https://github.com/ry-ops/creating-your-first-mcp-server.git
+cd creating-your-first-mcp-server
+npm install
 npm run build
+npm start            # run the server (stdio)
+npm run example      # run the example client against it
 ```
 
-### Watch Mode
+Then point an MCP client at it. For Claude Desktop, add to `claude_desktop_config.json`:
 
-```bash
-npm run dev
+```json
+{
+  "mcpServers": {
+    "first-server": {
+      "command": "node",
+      "args": ["/absolute/path/to/creating-your-first-mcp-server/dist/index.js"]
+    }
+  }
+}
 ```
 
-### Clean Build Artifacts
+## Build your own tool
 
-```bash
-npm run clean
-```
+Add a file under [`src/tools/`](src/tools/) alongside `calculator.ts`, `file-ops.ts` and `weather.ts`, register it in [`src/index.ts`](src/index.ts), and rebuild. The [`examples/client.ts`](examples/client.ts) shows how to list and call tools.
 
-## Documentation
+## Learn the concepts
 
-For more detailed information, see:
+- [MCP-CONCEPTS.md](documentation/MCP-CONCEPTS.md) — servers, clients, tools, resources, prompts
+- [TOOL-DEVELOPMENT.md](documentation/TOOL-DEVELOPMENT.md) — writing a tool
+- [INTEGRATION.md](documentation/INTEGRATION.md) — connecting clients
 
-- [MCP Concepts](./documentation/MCP-CONCEPTS.md) - Deep dive into MCP architecture and concepts
-- [Tool Development Guide](./documentation/TOOL-DEVELOPMENT.md) - How to create custom tools
-- [Integration Guide](./documentation/INTEGRATION.md) - Integrating the server with clients
-
-## Error Handling
-
-This server implements comprehensive error handling:
-
-- Input validation for all tool parameters
-- Graceful error messages for clients
-- Type-safe error responses
-- Logging for debugging
-
-## Security Considerations
-
-- File operations are restricted to safe directories
-- Input validation prevents injection attacks
-- Error messages don't expose sensitive system information
-- Rate limiting can be added for production use
+> Building on the SDK directly? The [Claude API docs](https://docs.claude.com) cover MCP and the tool-use loop.
 
 ## License
 
-MIT License - Copyright (c) 2026 ry-ops
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## Resources
-
-- [MCP Specification](https://modelcontextprotocol.io)
-- [MCP SDK Documentation](https://github.com/modelcontextprotocol/typescript-sdk)
-- [TypeScript Documentation](https://www.typescriptlang.org)
+MIT. See [LICENSE](LICENSE).
 
 <!-- org-footer -->
 ---
